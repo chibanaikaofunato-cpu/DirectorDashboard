@@ -2,25 +2,87 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>院長AIダッシュボード</title>
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;background:#f4f6f8;margin:0}
-header{background:#1f4e79;color:white;padding:22px;text-align:center;font-size:28px;font-weight:bold}
-main{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;padding:22px}
-.card{background:white;border-radius:14px;padding:20px;box-shadow:0 2px 8px #0002}
-h2{color:#1f4e79;margin-top:0}
-button{background:#1f4e79;color:white;border:0;border-radius:8px;padding:10px 16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:#f5f7fb;margin:0;color:#222}
+header{background:#0f4c81;color:white;padding:22px 28px}
+h1{margin:0;font-size:28px}
+.subtitle{opacity:.9;margin-top:6px}
+main{padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:white;border-radius:16px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.card h2{margin-top:0;font-size:21px}
+button{background:#0f4c81;color:white;border:0;border-radius:10px;padding:10px 16px;font-size:16px;cursor:pointer}
+.small{color:#666;font-size:14px}
+textarea{width:100%;height:160px;border-radius:10px;border:1px solid #ccc;padding:10px;font-size:15px}
+.output{white-space:pre-wrap;background:#f0f3f8;border-radius:10px;padding:12px;margin-top:12px}
 </style>
 </head>
 <body>
-<header>院長AIダッシュボード Ver.2</header>
+<header>
+<h1>院長AIダッシュボード</h1>
+<div class="subtitle">ちば内科診療所｜SOAP・生活習慣病管理料・紹介状・訪問診療支援</div>
+</header>
+
 <main>
-<section class="card"><h2>SOAP作成</h2><p>診察音声・メモからSOAPを作成します。</p><button>開く</button></section>
-<section class="card"><h2>生活習慣病管理料</h2><p>SOAPと一体化してカルテ貼付文を作成します。</p><button>開く</button></section>
-<section class="card"><h2>訪問診療</h2><p>訪問予定・看護記録・算定漏れを確認します。</p><button>開く</button></section>
-<section class="card"><h2>紹介状</h2><p>循環器・甲状腺・泌尿器などの紹介状を作成します。</p><button>開く</button></section>
-<section class="card"><h2>処方提案</h2><p>症状・年齢・既往歴から候補を整理します。</p><button>開く</button></section>
-<section class="card"><h2>今日の業務</h2><p>外来・訪問・介護審査会・スタッフ連絡を一覧化します。</p></section>
+<section class="card">
+<h2>🩺 SOAP作成</h2>
+<p class="small">診察音声・メモからSOAPを作成する入口</p>
+<textarea id="memo" placeholder="ここに診察メモを貼り付け"></textarea>
+<button onclick="makeSOAP()">SOAP生成</button>
+<div id="soap" class="output"></div>
+</section>
+
+<section class="card">
+<h2>📊 生活習慣病管理料</h2>
+<p>SOAPと重複しない形で、2号紙貼付用の管理料記載を作成します。</p>
+<button onclick="alert('次に実装：管理料テンプレート')">開く</button>
+</section>
+
+<section class="card">
+<h2>📄 紹介状</h2>
+<p>循環器・消化器・泌尿器・整形など紹介状作成。</p>
+<button onclick="alert('次に実装：紹介状作成')">開く</button>
+</section>
+
+<section class="card">
+<h2>🏠 訪問診療</h2>
+<p>訪問診療SOAP、看護記録、算定確認。</p>
+<button onclick="alert('次に実装：訪問診療')">開く</button>
+</section>
+
+<section class="card">
+<h2>💊 処方提案</h2>
+<p>症状・年齢・既往から処方候補を整理。</p>
+<button onclick="alert('次に実装：処方提案')">開く</button>
+</section>
+
+<section class="card">
+<h2>📅 今日の業務</h2>
+<ul>
+<li>外来</li>
+<li>訪問診療</li>
+<li>紹介状</li>
+<li>介護審査会</li>
+</ul>
+</section>
 </main>
+
+<script>
+function makeSOAP(){
+ const m=document.getElementById('memo').value.trim();
+ const text = m ? 
+`S）${m}
+
+O）診察時所見・バイタルを確認。
+
+A）病状は現時点で大きな変化なし。生活習慣病管理料対象の場合、管理方針を継続。
+
+P）内服継続。生活指導継続。次回再診時に血圧・検査結果・服薬状況を確認。`
+:
+'診察メモを入力してください。';
+ document.getElementById('soap').textContent=text;
+}
+</script>
 </body>
 </html>
